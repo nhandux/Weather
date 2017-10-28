@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Get thời tiết</title>
+  
+  
+  
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+  <div id="weather">
+  <div id="setting">
+    Chọn thành phố:
+
+    <!-- Lấy địa chỉ  http://woeid.rosselliot.co.nz/lookup -->
+    <select v-model="woeid" @change="changeLocation">
+      <option value="91888417">Hà Nội</option>
+      <option value="1252431">Hồ Chí Minh</option>
+      <option value="2347707">Hải Phòng</option>
+      <option value="1252351">Cần Thơ</option>
+      <option value="1252376">Đà Nẵng</option>
+      <option value="2347711">Quảng Nam</option>
+      <option value="1252438">Huế</option>
+    </select>
+  </div>
+
+  <div v-if="!error" id="display">
+    <div id="top">
+      <div class="location">{{ location }}</div>
+      <div class="time">{{ displayDate }}</div>
+      <div class="status">{{ status }}</div>
+    </div>
+
+    <div id="left-information">
+      <img :src="getThumbnail(status, 64)" :alt="status" class="thumbnail" />
+      <div class="temperature">{{ temperature }}</div>
+      <div class="unit">°C</div>
+    </div>
+
+    <div id="right-information">
+      <span>Humidity: {{ humidity }}%</span><br/>     
+      <span>Pressure: {{ pressure }} mb</span><br/>
+      <span>Wind speed: {{ wind }} km/h</span>
+    </div>
+
+    <div id="forecast">
+      <ul>
+        <li v-for="(f, i) in forecast" v-if="i < 8">
+          <div>{{ f.day }}</div>
+          <img :src="getThumbnail(f.text, 48)" :alt="f.text" />
+          <b>{{ f.high }}°</b> {{ f.low }}°
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div v-else="">Không nhận dạng được địa chỉ của bạn</div>
+</div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js'></script>
+<script src='https://unpkg.com/axios/dist/axios.min.js'></script>
+
+    <script  src="js/index.js"></script>
+
+</body>
+</html>
